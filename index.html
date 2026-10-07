@@ -95,42 +95,135 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
  </div>
 </div>
 <script>
-/* RE:HITS V2 Player DEV — visual demo only; no V1/backend changes */
-const art='https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/c5/02/7ec502cb-dc67-8e73-87d8-513e589d18c9/196873653616.jpg/600x600bb.jpg';
+/* RE:HITS V2.1 LIVE DATA
+   V2 DEV only — V1 is untouched.
+   Quick Tunnel URLs can be replaced below whenever they change. */
+const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
+const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
+const FALLBACK_ART='https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/c5/02/7ec502cb-dc67-8e73-87d8-513e589d18c9/196873653616.jpg/600x600bb.jpg';
 const $=id=>document.getElementById(id);
-$('cover').src=art;$('mobileCover').src=art;$('fullCover').src=art;$('replayCover').src=art;$('discoverCover').src=art;
-document.documentElement.style.setProperty('--art',`url("${art}")`);
-document.documentElement.style.setProperty('--mobile-art',`url("${art}")`);
 
-const songs=[['It’s ok I’m ok','Tate McRae','12:42'],['Taste','Sabrina Carpenter','12:39'],['Espresso','Sabrina Carpenter','12:36'],['Beautiful Things','Benson Boone','12:32'],['Austin','Dasha','12:29']];
-$('recent').innerHTML=songs.map(s=>`<div class="track"><img src="${art}"><div><b>${s[0]}</b><span>${s[1]}</span></div><time>${s[2]}</time></div>`).join('');
-$('fresh').innerHTML=songs.slice(0,3).map(s=>`<div class="album"><img src="${art}"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
-$('ranking').innerHTML=songs.map((s,i)=>`<div class="rank"><b>${i+1}</b><img src="${art}"><div>${s[0]}<br><small>${s[1]}</small></div><span>♡ ${342-i*31}</span></div>`).join('');
+const audio=new Audio();
+audio.src=STREAM_URL;
+audio.preload='none';
 
-let playing=true, liked=false;
-function setPlaying(v){
- playing=v;$('player').classList.toggle('is-playing',v);
- [$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.textContent=v?'Ⅱ':'▶');
+let playing=false, liked=false, lastKey='', lastStatus=null;
+
+function splitTrack(raw){
+  raw=(raw||'').trim();
+  if(!raw) return {artist:'RE:HITS',title:'HITS DIFFERENT.'};
+  const parts=raw.split(/\s+[–—-]\s+/);
+  if(parts.length>=2) return {artist:parts.shift().trim(),title:parts.join(' - ').trim()};
+  return {artist:'RE:HITS',title:raw};
 }
-[$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();setPlaying(!playing)}));
+function programMode(program=''){
+  const p=program.toUpperCase();
+  if(p.includes('RE:PLAY')) return ['RE:PLAY','ONE THROWBACK. EVERY HOUR.','↶ RE:PLAY'];
+  if(p.includes('DISCOVER')) return ['RE:DISCOVER',"DISCOVER WHAT'S NEXT.",'✦ RE:DISCOVER'];
+  if(p.includes('FRESH') || p.includes('TRENDING')) return ['RE:FRESH','YOUR NEXT FAVORITE.','🔥 RE:FRESH'];
+  return [program || 'RE:HITS','HITS DIFFERENT.','● RE:HITS'];
+}
+function setMode(program){
+  const m=programMode(program);
+  $('programName').textContent=m[0];
+  $('programSlogan').textContent=m[1];
+  $('modeBadge').textContent=m[2];
+  $('fullProgram').textContent='● LIVE • '+m[0];
+  $('miniArtist').textContent=($('mainArtist').textContent||'')+' • '+m[0];
+}
+function setPlaying(v){
+  playing=v;
+  $('player').classList.toggle('is-playing',v);
+  [$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.textContent=v?'Ⅱ':'▶');
+}
+async function toggleAudio(){
+  try{
+    if(audio.paused){ audio.src=STREAM_URL; await audio.play(); setPlaying(true); }
+    else { audio.pause(); setPlaying(false); }
+  }catch(e){ setPlaying(false); }
+}
+[$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();toggleAudio()}));
+audio.addEventListener('playing',()=>setPlaying(true));
+audio.addEventListener('pause',()=>setPlaying(false));
+
 function setLiked(v){
- liked=v;[$('likeBtn'),$('fullLike')].forEach(b=>{b.textContent=v?'♥':'♡';b.classList.toggle('liked',v)});
+  liked=v;
+  [$('likeBtn'),$('fullLike')].forEach(b=>{b.textContent=v?'♥':'♡';b.classList.toggle('liked',v)});
 }
 [$('likeBtn'),$('fullLike')].forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();setLiked(!liked)}));
 
 $('mobileBar').addEventListener('click',()=>$('mobileNow').classList.add('open'));
 $('closeNow').addEventListener('click',()=>$('mobileNow').classList.remove('open'));
 
-function setMode(mode){
- const modes={
-  fresh:['RE:FRESH','YOUR NEXT FAVORITE.','🔥 RE:FRESH'],
-  replay:['RE:PLAY','ONE THROWBACK. EVERY HOUR.','↶ RE:PLAY'],
-  discover:['RE:DISCOVER',"DISCOVER WHAT'S NEXT.",'✦ RE:DISCOVER'],
-  normal:['RE:HITS','HITS DIFFERENT.','● RE:HITS']
- };
- const m=modes[mode]||modes.normal;
- $('programName').textContent=m[0];$('programSlogan').textContent=m[1];$('modeBadge').textContent=m[2];$('fullProgram').textContent='● LIVE • '+m[0];
+function setArtwork(url){
+  const art=url||FALLBACK_ART;
+  [$('cover'),$('mobileCover'),$('fullCover'),$('replayCover'),$('discoverCover')].forEach(el=>{if(el) el.src=art});
+  document.documentElement.style.setProperty('--art',`url("${art}")`);
+  document.documentElement.style.setProperty('--mobile-art',`url("${art}")`);
 }
-setMode('fresh');
+function renderStatus(s){
+  lastStatus=s;
+  const cur=splitTrack(s.title);
+  const nxt=splitTrack(s.next);
+  const program=s.program || 'RE:HITS';
+  $('mainTitle').textContent=cur.title;
+  $('mainArtist').textContent=cur.artist;
+  $('miniTitle').textContent=cur.title;
+  $('fullTitle').textContent=cur.title;
+  $('fullArtist').textContent=cur.artist;
+  $('nextTrack').textContent=(nxt.artist && nxt.artist!=='RE:HITS' ? nxt.artist+' — ' : '')+nxt.title;
+  $('fullNext').textContent=$('nextTrack').textContent;
+  setArtwork(s.cover);
+  setMode(program);
+  $('miniArtist').textContent=cur.artist+' • '+programMode(program)[0];
+  $('player').classList.remove('offline');
+  lastKey=[s.title,s.program,s.cover].join('|');
+}
+function renderRecent(items=[]){
+  if(!items.length) return;
+  $('recent').innerHTML=items.slice(0,5).map((x,i)=>{
+    const t=splitTrack(x.title||x.song||'');
+    const cover=x.cover||FALLBACK_ART;
+    const tm=x.played_at ? new Date(x.played_at).toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'}) : '';
+    return `<div class="track"><img src="${cover}"><div><b>${t.title}</b><span>${t.artist}</span></div><time>${tm}</time></div>`;
+  }).join('');
+}
+function renderFresh(items=[]){
+  if(!items.length) return;
+  $('fresh').innerHTML=items.slice(0,3).map(x=>{
+    const t=splitTrack(x.title||x.song||'');
+    return `<div class="album"><img src="${x.cover||FALLBACK_ART}"><b>${t.title}</b><span>${t.artist}</span></div>`;
+  }).join('');
+}
+async function loadStatus(){
+  try{
+    const r=await fetch(API_URL+'/api/status',{cache:'no-store'});
+    if(!r.ok) throw new Error('status');
+    renderStatus(await r.json());
+  }catch(e){
+    $('player').classList.add('offline');
+  }
+}
+async function loadHistory(){
+  try{
+    const r=await fetch(API_URL+'/api/history',{cache:'no-store'});
+    if(!r.ok) return;
+    const d=await r.json();
+    renderRecent(Array.isArray(d)?d:(d.items||d.history||[]));
+  }catch(e){}
+}
+async function loadFresh(){
+  try{
+    const r=await fetch(API_URL+'/api/refresh',{cache:'no-store'});
+    if(!r.ok) return;
+    const d=await r.json();
+    renderFresh(d.items||[]);
+  }catch(e){}
+}
+setArtwork(FALLBACK_ART);
+loadStatus(); loadHistory(); loadFresh();
+setInterval(loadStatus,5000);
+setInterval(loadHistory,15000);
+setInterval(loadFresh,30000);
 </script>
 </body></html>
