@@ -67,13 +67,27 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .songModal{position:fixed;inset:0;z-index:120;background:rgba(0,5,4,.72);backdrop-filter:blur(18px);display:none;place-items:center;padding:20px}.songModal.open{display:grid}
 .songModalCard{position:relative;width:min(390px,92vw);padding:18px;border-radius:20px}.songModalCard>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:15px;margin-bottom:18px}.songModalCard h2{font-size:26px;margin:7px 0 4px}.songModalCard p{margin:0;color:#a9bab4}.modalClose{position:absolute;right:27px;top:27px;width:36px;height:36px;border-radius:50%;border:1px solid #ffffff2a;background:#07110eee;color:white;font-size:24px;cursor:pointer}
 
+
+/* V2.3 PLAYER POLISH */
+.player{grid-template-columns:minmax(205px,290px) minmax(0,1fr);align-items:center;min-height:0}
+.coverbox{width:100%;height:auto;aspect-ratio:1;align-self:center;border-radius:16px;box-shadow:0 18px 55px #000a,0 0 30px rgba(0,239,181,.10)}
+.coverbox .cover{display:block;width:100%;height:100%;max-width:none;aspect-ratio:1;object-fit:cover;border-radius:15px}
+.coverbox:after{inset:-3px;border-radius:18px}
+.now{min-width:0}.title{overflow-wrap:anywhere;font-size:clamp(27px,3vw,45px);line-height:1.07}
+.play,.mobileNowControls .big{display:grid;place-items:center;background:#00efb5!important;color:#002b21!important;border-color:#00efb5!important;box-shadow:0 0 28px #00efb555}
+.play svg,.mobileNowControls .big svg,.mobilebar button svg{display:block}
+.mobilebar button{display:grid;place-items:center}
+.album img{display:block;width:100%;aspect-ratio:1;min-height:80px;background:linear-gradient(140deg,#123b30,#04120e);object-fit:cover}
+.album{min-width:0}.album b,.album span{overflow-wrap:anywhere}
+@media(max-width:900px){.player{grid-template-columns:1fr}.coverbox{max-width:430px;margin:0 auto}.coverbox .cover{max-width:none}}
+.replayArtwork{width:115px;height:115px;border-radius:9px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 20% 20%,#07634e,#04130f 70%);border:1px solid #00efb548}.replayArtwork img{width:100%;height:100%;object-fit:cover}.replayArtwork img[hidden],.replayArtwork span[hidden]{display:none}.replayArtwork span{text-align:center;font-size:17px;line-height:1.5;font-weight:950;letter-spacing:.05em;color:#00efb5}.replay .count{font-size:20px}
 </style>
 </head>
 <body>
 <header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a class="on">Hjem</a><a>Programmer</a><a>RE:FRESH</a><a>RE:PLAY</a><a>RE:DISCOVER</a><a>Sendeplan</a></nav><span class="search">⌕</span><span class="heart">♡</span><button class="livebtn">LIVE</button></div></header>
 <div class="wrap">
 <section class="hero">
- <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge">RE:FRESH</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName">RE:FRESH</div><div class="slogan" id="programSlogan">YOUR NEXT FAVORITE.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay">Ⅱ</button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="progress"><i></i></div><div class="times"><span>LIVE</span><span>RE:HITS</span></div><div class="nextline"><em>RE:NESTE</em> <strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
+ <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge">RE:FRESH</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName">RE:FRESH</div><div class="slogan" id="programSlogan">YOUR NEXT FAVORITE.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay" aria-label="Spill radio"></button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="progress"><i></i></div><div class="times"><span>LIVE</span><span>RE:HITS</span></div><div class="nextline"><em>RE:NESTE</em> <strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
  <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b>RE:FRESH</b><span>YOUR NEXT FAVORITE.</span><span>10:00 – 14:00</span></div></div><div class="air"><div class="airicon">↶</div><div><b>RE:NESTE • RE:PLAY</b><span>ONE THROWBACK. EVERY HOUR.</span><span>14:00 – 15:00</span></div></div></aside>
 </section>
 
@@ -82,7 +96,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 <section class="grid">
  <div class="panel glass"><div class="head"><h2>SISTE LÅTER</h2><a>Se alle</a></div><div id="recent"></div></div>
  <div class="panel glass"><div class="head"><h2><span>RE:FRESH</span> — NYE LÅTER</h2><a>Se alle</a></div><div class="albums" id="fresh"></div></div>
- <div class="panel glass"><div class="head"><h2><span>RE:PLAY</span> — TIMENS THROWBACK</h2></div><div class="replay"><img id="replayCover"><div><h3>Mr. Brightside</h3><p>The Killers • 2003</p><small>Neste RE:PLAY</small><div class="count">17 min</div></div></div></div>
+ <div class="panel glass"><div class="head"><h2><span>RE:PLAY</span> — TIMENS THROWBACK</h2></div><div class="replay"><div class="replayArtwork" id="replayArtwork"><img id="replayCover" alt="RE:PLAY cover" hidden><span id="replayFallback">↶<br>RE:PLAY</span></div><div><h3 id="replayTitle">Venter på timens throwback</h3><p id="replayArtist">ONE THROWBACK. EVERY HOUR.</p><small id="replayCaption">Neste RE:PLAY</small><div class="count" id="replayCountdown">Ved neste hele time</div></div></div></div>
 </section>
 
 <section class="lower">
@@ -92,7 +106,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 </section>
 </div>
 
-<div class="mobilebar glass" id="mobileBar"><img id="mobileCover"><div><b id="miniTitle">It's ok I'm ok</b><span id="miniArtist">Tate McRae • RE:FRESH</span></div><button id="miniPlay">Ⅱ</button></div>
+<div class="mobilebar glass" id="mobileBar"><img id="mobileCover"><div><b id="miniTitle">It's ok I'm ok</b><span id="miniArtist">Tate McRae • RE:FRESH</span></div><button id="miniPlay" aria-label="Spill radio"></button></div>
 
 <div class="songModal" id="songModal" aria-hidden="true">
   <div class="songModalCard glass">
@@ -109,7 +123,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
   <img class="mobileNowCover" id="fullCover">
   <div class="mobileNowProgram" id="fullProgram">● LIVE • RE:FRESH</div>
   <h2 id="fullTitle">It's ok I'm ok</h2><div class="mobileNowArtist" id="fullArtist">Tate McRae</div>
-  <div class="mobileNowControls"><button class="round" id="fullLike">♡</button><button class="big" id="fullPlay">Ⅱ</button><button class="round">🔊</button></div>
+  <div class="mobileNowControls"><button class="round" id="fullLike">♡</button><button class="big" id="fullPlay" aria-label="Spill radio"></button><button class="round">🔊</button></div>
   <div class="mobileNowNext">RE:NESTE<br><b id="fullNext">Sabrina Carpenter — Taste</b></div>
  </div>
 </div>
@@ -117,8 +131,8 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 /* RE:HITS V2.1 LIVE DATA
    V2 DEV only — V1 is untouched.
    Quick Tunnel URLs can be replaced below whenever they change. */
-const API_URL = "https://peterson-bat-extent-led.trycloudflare.com";
-const STREAM_URL = "https://doll-excess-reflected-lbs.trycloudflare.com/thehits";
+const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
+const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
 const FALLBACK_ART='https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/c5/02/7ec502cb-dc67-8e73-87d8-513e589d18c9/196873653616.jpg/600x600bb.jpg';
 const $=id=>document.getElementById(id);
 
@@ -127,6 +141,21 @@ audio.src=STREAM_URL;
 audio.preload='none';
 
 let playing=false, liked=false, lastKey='', lastStatus=null;
+const PLAY_ICON='<svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+const PAUSE_ICON='<svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+function trackData(value){
+ if(value && typeof value==='object'){
+   const artist=value.artist||value.artist_name||'';
+   const title=value.song||value.track||value.name||value.title||'';
+   if(artist && title && !String(title).includes(artist))return {artist:String(artist),title:String(title)};
+   return splitTrack(String(title));
+ }
+ return splitTrack(String(value||''));
+}
+function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function safeCover(v){if(typeof v!=='string'||!v.trim())return FALLBACK_ART;try{const u=new URL(v,API_URL);return ['https:','http:'].includes(u.protocol)?u.href:FALLBACK_ART}catch{return FALLBACK_ART}}
+function coverImg(url,klass=''){return `<img class="${klass}" src="${esc(safeCover(url))}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_ART}'" alt="Albumcover">`}
+
 
 function splitTrack(raw){
   raw=(raw||'').trim();
@@ -153,7 +182,7 @@ function setMode(program){
 function setPlaying(v){
   playing=v;
   $('player').classList.toggle('is-playing',v);
-  [$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.textContent=v?'Ⅱ':'▶');
+  [$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>{b.innerHTML=v?PAUSE_ICON:PLAY_ICON;b.setAttribute('aria-label',v?'Pause radio':'Spill radio')});
 }
 async function toggleAudio(){
   try{
@@ -175,15 +204,46 @@ $('mobileBar').addEventListener('click',()=>$('mobileNow').classList.add('open')
 $('closeNow').addEventListener('click',()=>$('mobileNow').classList.remove('open'));
 
 function setArtwork(url){
-  const art=url||FALLBACK_ART;
-  [$('cover'),$('mobileCover'),$('fullCover'),$('replayCover'),$('discoverCover')].forEach(el=>{if(el) el.src=art});
+  const art=safeCover(url);
+  [$('cover'),$('mobileCover'),$('fullCover'),$('discoverCover')].forEach(el=>{if(el){el.onerror=()=>{el.onerror=null;el.src=FALLBACK_ART};el.src=art}});
   document.documentElement.style.setProperty('--art',`url("${art}")`);
   document.documentElement.style.setProperty('--mobile-art',`url("${art}")`);
 }
+
+/* RE:PLAY card is independent from current song artwork. */
+let lastReplay=null;
+function replayMatch(x){
+ const p=String(x?.program||x?.show||x?.program_name||'').toUpperCase();
+ return p.includes('RE:PLAY');
+}
+function setReplayArtwork(url){
+ const img=$('replayCover'), fallback=$('replayFallback');
+ if(!url){img.hidden=true;img.removeAttribute('src');fallback.hidden=false;return;}
+ img.onerror=()=>{img.hidden=true;fallback.hidden=false;};
+ img.onload=()=>{img.hidden=false;fallback.hidden=true;};
+ img.src=safeCover(url);
+}
+function renderReplay(item,active=false){
+ if(!item)return;
+ const t=trackData(item);
+ $('replayTitle').textContent=t.title;
+ const year=item.year||item.release_year||'';
+ $('replayArtist').textContent=t.artist+(year?' • '+year:'');
+ $('replayCaption').textContent=active?'SPILLER NÅ':'SISTE RE:PLAY';
+ setReplayArtwork(item.cover||item.artwork||item.image||null);
+}
+function replayCountdown(){
+ if(lastStatus && replayMatch(lastStatus)){
+   $('replayCountdown').textContent='PÅ LUFTA NÅ';return;
+ }
+ const now=new Date(), min=60-now.getMinutes()-(now.getSeconds()>0?1:0);
+ $('replayCountdown').textContent=min<=0?'Snart':`${min} min`;
+}
+
 function renderStatus(s){
   lastStatus=s;
-  const cur=splitTrack(s.title);
-  const nxt=splitTrack(s.next);
+  const cur=trackData((s.artist && s.title)?{artist:s.artist,title:s.title}:s.title);
+  const nxt=trackData(s.next);
   const program=s.program || 'RE:HITS';
   $('mainTitle').textContent=cur.title;
   $('mainArtist').textContent=cur.artist;
@@ -194,24 +254,34 @@ function renderStatus(s){
   $('fullNext').textContent=$('nextTrack').textContent;
   setArtwork(s.cover);
   setMode(program);
+  if(replayMatch(s)){
+    lastReplay={title:s.title,artist:s.artist||'',cover:s.cover,program:s.program};
+    renderReplay(lastReplay,true);
+  }else if(lastReplay){renderReplay(lastReplay,false);}
+  replayCountdown();
   $('miniArtist').textContent=cur.artist+' • '+programMode(program)[0];
   $('player').classList.remove('offline');
   lastKey=[s.title,s.program,s.cover].join('|');
 }
 function renderRecent(items=[]){
   if(!items.length) return;
+  if(!replayMatch(lastStatus)){
+    const previous=items.find(replayMatch);
+    if(previous){lastReplay=previous;renderReplay(previous,false);}
+  }
+  replayCountdown();
   $('recent').innerHTML=items.slice(0,5).map((x,i)=>{
-    const t=splitTrack(x.title||x.song||'');
-    const cover=x.cover||FALLBACK_ART;
+    const t=trackData(x);
+    const cover=safeCover(x.cover||x.artwork||x.image);
     const tm=x.played_at ? new Date(x.played_at).toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'}) : '';
-    return `<div class="track"><img src="${cover}"><div><b>${t.title}</b><span>${t.artist}</span></div><time>${tm}</time></div>`;
+    return `<div class="track">${coverImg(cover)}<div><b>${esc(t.title)}</b><span>${esc(t.artist)}</span></div><time>${esc(tm)}</time></div>`;
   }).join('');
 }
 function renderFresh(items=[]){
   if(!items.length) return;
   $('fresh').innerHTML=items.slice(0,3).map(x=>{
-    const t=splitTrack(x.title||x.song||'');
-    return `<div class="album"><img src="${x.cover||FALLBACK_ART}"><b>${t.title}</b><span>${t.artist}</span></div>`;
+    const t=trackData(x);
+    return `<div class="album">${coverImg(x.cover||x.artwork||x.image)}<b>${esc(t.title)}</b><span>${esc(t.artist)}</span></div>`;
   }).join('');
 }
 async function loadStatus(){
@@ -291,9 +361,10 @@ $('shareBtn').addEventListener('click',async()=>{
   $('moreMenu').classList.remove('open');
 });
 
-setArtwork(FALLBACK_ART);
+setPlaying(false);setArtwork(FALLBACK_ART);
 loadStatus(); loadHistory(); loadFresh();
 setInterval(loadStatus,5000);
+setInterval(replayCountdown,15000);
 setInterval(loadHistory,15000);
 setInterval(loadFresh,30000);
 </script>
