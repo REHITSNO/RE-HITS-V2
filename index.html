@@ -98,6 +98,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .nextline em{font-size:12px;letter-spacing:.055em;flex:none;margin-right:0}
 .nextline strong{font-size:clamp(14px,1.15vw,17px);font-weight:750;overflow-wrap:anywhere;min-width:0}
 @media(max-width:600px){.nextline{align-items:flex-start;flex-direction:column;gap:5px;padding:14px 16px;min-height:0}.nextline em{font-size:11px}.nextline strong{font-size:16px}}
+#programSchedule div{padding:11px 0}#programSchedule b{color:#00e6ad}#programSchedule span{color:#e5f4ef}.side .air b{font-size:15px}.side .air span{font-size:12px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -105,7 +106,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 <div class="wrap">
 <section class="hero">
  <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge" hidden>RE:PLAY</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName" hidden>RE:HITS</div><div class="slogan" id="programSlogan" hidden>HITS DIFFERENT.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay" aria-label="Spill radio"></button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="nextline"><em>RE:NESTE</em><strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
- <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b>RE:FRESH</b><span>YOUR NEXT FAVORITE.</span><span>10:00 – 14:00</span></div></div><div class="air"><div class="airicon">↶</div><div><b>RE:NESTE • RE:PLAY</b><span>ONE THROWBACK. EVERY HOUR.</span><span>14:00 – 15:00</span></div></div></aside>
+ <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b id="onAirName">Henter program …</b><span id="onAirDesc">Direkte fra RE:HITS</span><span id="onAirTime"></span></div></div><div class="air"><div class="airicon">↶</div><div><b id="nextProgramName">RE:NESTE</b><span id="nextProgramDesc">Neste program</span><span id="nextProgramTime"></span></div></div></aside>
 </section>
 
 <section class="tiles"><article class="tile glass"><h3><span>RE:</span>FRESH</h3><p>YOUR NEXT FAVORITE.</p></article><article class="tile glass"><h3><span>RE:</span>PLAY</h3><p>ONE THROWBACK. EVERY HOUR.</p></article><article class="tile glass"><h3><span>RE:</span>DISCOVER</h3><p>DISCOVER WHAT'S NEXT.</p></article><article class="tile glass"><h3><span>RE:</span>MEST LIKT</h3><p>TOPP 5 AKKURAT NÅ.</p></article></section>
@@ -119,7 +120,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 <section class="lower">
  <div class="panel glass"><div class="head"><h2><span>RE:DISCOVER</span> — ARTIST I FOKUS</h2></div><div class="discover"><img id="discoverCover"><div><h3>Artist i fokus</h3><p>En artist eller låt vi mener du bør oppdage akkurat nå.</p><button class="tinybtn">HØR MER</button></div></div></div>
  <div class="panel glass"><div class="head"><h2><span>RE:MEST LIKT</span></h2><a>Se alle</a></div><div id="ranking"></div></div>
- <div class="panel glass"><div class="head"><h2>PROGRAMMER</h2><a>Se alle</a></div><div class="schedule"><div><b>RE:FRESH</b><span>10:00 – 14:00</span></div><div><b>RE:PLAY</b><span>Hver hele time</span></div><div><b>RE:DISCOVER</b><span>Kommer</span></div><div><b>RE:HITS</b><span>NON STOP</span></div></div></div>
+ <div class="panel glass"><div class="head"><h2>PROGRAMMER</h2><a href="#sendeplan" id="scheduleAll">Se alle</a></div><div class="schedule" id="programSchedule"></div></div></div>
 </section>
 </div>
 
@@ -148,8 +149,8 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 /* RE:HITS V2.1 LIVE DATA
    V2 DEV only — V1 is untouched.
    Quick Tunnel URLs can be replaced below whenever they change. */
-const API_URL = "https://spyware-involvement-career-yarn.trycloudflare.com";
-const STREAM_URL = "https://mary-experiment-conclusion-proved.trycloudflare.com/thehits";
+const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
+const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
 const FALLBACK_ART='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600"><rect width="600" height="600" fill="%2306251d"/><text x="300" y="310" text-anchor="middle" fill="%2300e9ae" font-size="60" font-family="Arial">RE:FRESH</text></svg>');
 const $=id=>document.getElementById(id);
 
@@ -258,7 +259,46 @@ function replayCountdown(){
  $('replayCountdown').textContent=min<=0?'Snart':`${min} min`;
 }
 
+
+/* V2.8: Program times mirror the current bot.py schedule, Norwegian local time. */
+const WEEKDAY_PROGRAMS=[
+ [0,360,'The Hits NON STOP NIGHT'],[360,720,'The Hits NON STOP'],
+ [720,900,'RE:FRESH'],[900,1440,'The Hits NON STOP']];
+const WEEKEND_PROGRAMS=[
+ [0,360,'The Hits NON STOP'],[360,1080,'Non Stop Helg'],
+ [1080,1320,'Dance Mix'],[1320,1440,'The Hits NON STOP']];
+const clock=n=>`${String(Math.floor(n/60)%24).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
+function norwayNow(){
+ const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Oslo',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+ const get=t=>parts.find(p=>p.type===t)?.value||'';
+ return {day:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(get('weekday')),minutes:Number(get('hour'))*60+Number(get('minute'))};
+}
+function daySlots(day){return day>=5?WEEKEND_PROGRAMS:WEEKDAY_PROGRAMS;}
+function programDescription(name){
+ if(name.includes('RE:FRESH'))return 'YOUR NEXT FAVORITE.';
+ if(name.includes('NIGHT'))return 'Musikk gjennom natten';
+ if(name.includes('Helg'))return 'Musikk hele helgen';
+ if(name.includes('Dance'))return 'Dance Mix';
+ return 'HITS DIFFERENT.';
+}
+function updateProgramCards(){
+ const {day,minutes}=norwayNow();if(day<0)return;
+ const slots=daySlots(day),idx=Math.max(0,slots.findIndex(x=>minutes>=x[0]&&minutes<x[1]));
+ const now=slots[idx],next=slots[idx+1]||daySlots((day+1)%7)[0];
+ const nextStart=slots[idx+1]?next[0]:0;
+ const statusName=String(lastStatus?.program||'').trim();
+ const liveName=statusName||now[2];
+ $('onAirName').textContent=liveName;
+ $('onAirDesc').textContent=programDescription(liveName);
+ $('onAirTime').textContent=`${clock(now[0])} – ${clock(now[1])}`;
+ $('nextProgramName').textContent='RE:NESTE • '+next[2];
+ $('nextProgramDesc').textContent=programDescription(next[2]);
+ $('nextProgramTime').textContent=`${clock(nextStart)} – ${clock(next[1])}`;
+ $('programSchedule').innerHTML=slots.map(x=>`<div><b>${esc(x[2])}</b><span>${clock(x[0])} – ${clock(x[1])}</span></div>`).join('')+'<div><b>RE:PLAY</b><span>Hver hele time (innslag)</span></div>';
+}
+
 function renderStatus(s){
+  updateProgramCards();
   lastStatus=s;
   const cur=trackData((s.artist && s.title)?{artist:s.artist,title:s.title}:s.title);
   const nxt=trackData(s.next);
@@ -383,6 +423,8 @@ setPlaying(false);setArtwork(FALLBACK_ART);
 loadStatus(); loadHistory(); loadFresh();
 setInterval(loadStatus,5000);
 setInterval(replayCountdown,15000);
+setInterval(updateProgramCards,30000);
+updateProgramCards();
 setInterval(loadHistory,15000);
 setInterval(loadFresh,30000);
 </script>
