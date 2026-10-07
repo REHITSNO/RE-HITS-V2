@@ -58,13 +58,22 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .mobilebar{cursor:pointer}
 @media(min-width:901px){.mobileNow{display:none!important}}
 
+
+.controlWrap{position:relative}
+.moreMenu,.volumePop{position:absolute;bottom:58px;left:50%;transform:translateX(-50%) translateY(8px);opacity:0;pointer-events:none;transition:.18s ease;z-index:30;background:rgba(3,14,11,.96);border:1px solid rgba(0,239,181,.25);box-shadow:0 18px 50px #000b;border-radius:12px;padding:8px;backdrop-filter:blur(18px)}
+.moreMenu.open,.volumePop.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.moreMenu{width:190px}.moreMenu button{display:block;width:100%;border:0;background:transparent;color:#e9f5f1;text-align:left;padding:10px 11px;border-radius:8px;font-size:11px;cursor:pointer}.moreMenu button:hover{background:rgba(0,239,181,.1);color:var(--mint)}
+.volumePop{width:180px;display:flex;align-items:center;gap:10px;padding:12px}.volumePop span{font-size:10px;font-weight:900;color:var(--mint);min-width:34px}.volumePop input{width:120px;accent-color:#00efb5}
+.songModal{position:fixed;inset:0;z-index:120;background:rgba(0,5,4,.72);backdrop-filter:blur(18px);display:none;place-items:center;padding:20px}.songModal.open{display:grid}
+.songModalCard{position:relative;width:min(390px,92vw);padding:18px;border-radius:20px}.songModalCard>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:15px;margin-bottom:18px}.songModalCard h2{font-size:26px;margin:7px 0 4px}.songModalCard p{margin:0;color:#a9bab4}.modalClose{position:absolute;right:27px;top:27px;width:36px;height:36px;border-radius:50%;border:1px solid #ffffff2a;background:#07110eee;color:white;font-size:24px;cursor:pointer}
+
 </style>
 </head>
 <body>
 <header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a class="on">Hjem</a><a>Programmer</a><a>RE:FRESH</a><a>RE:PLAY</a><a>RE:DISCOVER</a><a>Sendeplan</a></nav><span class="search">⌕</span><span class="heart">♡</span><button class="livebtn">LIVE</button></div></header>
 <div class="wrap">
 <section class="hero">
- <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge">RE:FRESH</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName">RE:FRESH</div><div class="slogan" id="programSlogan">YOUR NEXT FAVORITE.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><button class="round">•••</button><button class="round play" id="mainPlay">Ⅱ</button><button class="round">🔊</button></div><div class="progress"><i></i></div><div class="times"><span>LIVE</span><span>RE:HITS</span></div><div class="nextline"><em>RE:NESTE</em> <strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
+ <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge">RE:FRESH</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName">RE:FRESH</div><div class="slogan" id="programSlogan">YOUR NEXT FAVORITE.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay">Ⅱ</button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="progress"><i></i></div><div class="times"><span>LIVE</span><span>RE:HITS</span></div><div class="nextline"><em>RE:NESTE</em> <strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
  <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b>RE:FRESH</b><span>YOUR NEXT FAVORITE.</span><span>10:00 – 14:00</span></div></div><div class="air"><div class="airicon">↶</div><div><b>RE:NESTE • RE:PLAY</b><span>ONE THROWBACK. EVERY HOUR.</span><span>14:00 – 15:00</span></div></div></aside>
 </section>
 
@@ -84,6 +93,16 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 </div>
 
 <div class="mobilebar glass" id="mobileBar"><img id="mobileCover"><div><b id="miniTitle">It's ok I'm ok</b><span id="miniArtist">Tate McRae • RE:FRESH</span></div><button id="miniPlay">Ⅱ</button></div>
+
+<div class="songModal" id="songModal" aria-hidden="true">
+  <div class="songModalCard glass">
+    <button class="modalClose" id="modalClose">×</button>
+    <img id="modalCover" alt="">
+    <div class="eyebrow" id="modalProgram">● LIVE • RE:HITS</div>
+    <h2 id="modalTitle">RE:HITS</h2>
+    <p id="modalArtist">HITS DIFFERENT.</p>
+  </div>
+</div>
 <div class="mobileNow" id="mobileNow">
  <div class="mobileNowInner">
   <div class="mobileNowTop"><img src="rehits-logo-v2.png" alt="RE:HITS"><button class="closeNow" id="closeNow">⌄</button></div>
@@ -220,6 +239,58 @@ async function loadFresh(){
     renderFresh(d.items||[]);
   }catch(e){}
 }
+
+/* Player controls */
+const savedVolume=Number(localStorage.getItem('rehitsVolume') ?? 1);
+audio.volume=Math.max(0,Math.min(1,savedVolume));
+$('volumeSlider').value=Math.round(audio.volume*100);
+$('volumeText').textContent=Math.round(audio.volume*100)+'%';
+function volumeIcon(){ $('volumeBtn').textContent=audio.muted||audio.volume===0?'🔇':audio.volume<.5?'🔉':'🔊'; }
+volumeIcon();
+$('volumeBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  $('moreMenu').classList.remove('open');
+  $('volumePop').classList.toggle('open');
+});
+$('volumeSlider').addEventListener('input',e=>{
+  audio.muted=false; audio.volume=Number(e.target.value)/100;
+  localStorage.setItem('rehitsVolume',String(audio.volume));
+  $('volumeText').textContent=e.target.value+'%'; volumeIcon();
+});
+$('volumeBtn').addEventListener('dblclick',e=>{e.preventDefault();audio.muted=!audio.muted;volumeIcon();});
+
+$('moreBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  $('volumePop').classList.remove('open');
+  $('moreMenu').classList.toggle('open');
+});
+document.addEventListener('click',()=>{$('moreMenu').classList.remove('open');$('volumePop').classList.remove('open')});
+$('moreMenu').addEventListener('click',e=>e.stopPropagation());
+
+$('detailsBtn').addEventListener('click',()=>{
+  $('modalCover').src=$('cover').src;
+  $('modalTitle').textContent=$('mainTitle').textContent;
+  $('modalArtist').textContent=$('mainArtist').textContent;
+  $('modalProgram').textContent='● LIVE • '+$('programName').textContent;
+  $('songModal').classList.add('open'); $('songModal').setAttribute('aria-hidden','false');
+  $('moreMenu').classList.remove('open');
+});
+function closeModal(){$('songModal').classList.remove('open');$('songModal').setAttribute('aria-hidden','true')}
+$('modalClose').addEventListener('click',closeModal);
+$('songModal').addEventListener('click',e=>{if(e.target===$('songModal'))closeModal()});
+$('recentBtn').addEventListener('click',()=>{
+  $('moreMenu').classList.remove('open');
+  $('recentSection')?.scrollIntoView({behavior:'smooth',block:'start'});
+});
+$('shareBtn').addEventListener('click',async()=>{
+  const txt=`Hører på ${$('mainTitle').textContent} – ${$('mainArtist').textContent} på RE:HITS 📻`;
+  try{
+    if(navigator.share) await navigator.share({title:'RE:HITS',text:txt,url:location.href});
+    else {await navigator.clipboard.writeText(txt+' '+location.href); alert('Delingsteksten er kopiert!');}
+  }catch(e){}
+  $('moreMenu').classList.remove('open');
+});
+
 setArtwork(FALLBACK_ART);
 loadStatus(); loadHistory(); loadFresh();
 setInterval(loadStatus,5000);
