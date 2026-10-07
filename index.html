@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RE:HITS WEB V2 • DEV</title><meta name="theme-color" content="#020706">
+<style>
+:root{--mint:#00efb5;--mint2:#20ffd0;--bg:#020605;--card:rgba(7,18,15,.78);--line:rgba(41,255,200,.20);--text:#f6fbfa;--muted:#91a39d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,Arial,sans-serif;background:#020605 url('rehits-v2-bg.png') center top/cover fixed no-repeat}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.62) 70%,#020504)}
+.wrap{width:min(1440px,94vw);margin:auto}.glass{background:linear-gradient(145deg,rgba(11,30,24,.86),rgba(3,10,8,.80));border:1px solid var(--line);box-shadow:inset 0 1px rgba(255,255,255,.025),0 22px 65px rgba(0,0,0,.36);backdrop-filter:blur(15px)}
+header{height:88px;border-bottom:1px solid rgba(0,239,181,.18);background:rgba(0,4,3,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:30}
+.nav{height:100%;display:flex;align-items:center;gap:25px}.logo{width:190px;height:auto;display:block}.dev{font-size:9px;letter-spacing:.16em;color:#ffc85d;border:1px solid #ffc85d88;border-radius:99px;padding:5px 8px}
+nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:none;font-size:11px;font-weight:800}nav a:hover,nav .on{color:var(--mint)}.search,.heart{font-size:19px;color:white}.livebtn{border:0;border-radius:9px;background:var(--mint);padding:13px 25px;font-weight:950;color:#00271e;box-shadow:0 0 28px #00efb544}
+.hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(310px,.82fr);gap:18px;padding-top:22px}
+.player{border-radius:19px;padding:20px;display:grid;grid-template-columns:290px 1fr;gap:28px;min-height:340px;position:relative;overflow:hidden;isolation:isolate}
+.player:before{content:"";position:absolute;inset:-40px;background:linear-gradient(90deg,rgba(1,7,5,.55),rgba(1,8,6,.28)),var(--art);background-size:cover;background-position:center;filter:blur(36px) saturate(1.35);opacity:.46;z-index:-2}.player:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(1,8,6,.70),rgba(1,8,6,.48));z-index:-1}
+.cover{width:100%;aspect-ratio:1;object-fit:cover;border-radius:13px;box-shadow:0 18px 45px #0009}.now{display:flex;flex-direction:column;justify-content:center}.live{display:inline-flex;width:max-content;gap:8px;align-items:center;border:1px solid #00efb577;color:var(--mint);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:950;box-shadow:0 0 18px #00efb526}.dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+.program{margin:13px 0 0;color:var(--mint);font-weight:950;font-size:15px}.slogan{font-size:11px;color:#c6d1cd;margin-top:3px}.title{font-size:clamp(30px,3.4vw,52px);letter-spacing:-.045em;line-height:1;margin:22px 0 7px}.artist{font-size:17px;color:#d2dbd8}
+.controls{display:flex;align-items:center;gap:15px;margin-top:24px}.round{width:44px;height:44px;border-radius:50%;border:1px solid #ffffff24;background:#08120f;color:white;font-size:18px}.play{width:60px;height:60px;border-color:var(--mint);box-shadow:0 0 24px #00efb53b;font-size:23px}.like{margin-left:auto}.progress{margin-top:24px;height:4px;border-radius:10px;background:#34433e;overflow:hidden}.progress i{display:block;width:42%;height:100%;background:var(--mint);box-shadow:0 0 12px var(--mint)}.times{display:flex;justify-content:space-between;color:#8da099;font-size:10px;margin-top:7px}
+.side{display:grid;grid-template-rows:auto 1fr 1fr;gap:10px;padding:14px;border-radius:19px}.sidehead{font-size:12px;color:var(--mint);font-weight:950;letter-spacing:.08em}.air{border:1px solid var(--line);background:#0b1b17cc;border-radius:12px;padding:15px;display:grid;grid-template-columns:52px 1fr;gap:13px;align-items:center}.airicon{width:52px;height:52px;border:1px solid #00efb555;border-radius:10px;display:grid;place-items:center;font-size:24px;background:#06120f}.air b{display:block;color:var(--mint);font-size:13px}.air span{font-size:10px;color:#b2c1bc;display:block;margin-top:4px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}.tile{height:132px;border-radius:15px;padding:18px;position:relative;overflow:hidden}.tile:after{content:"";position:absolute;width:130px;height:130px;right:-40px;bottom:-55px;background:var(--mint);filter:blur(50px);opacity:.17}.tile h3{font-size:19px;margin:35px 0 4px}.tile h3 span{color:var(--mint)}.tile p{font-size:10px;color:#c3ceca;margin:0}
+.grid{display:grid;grid-template-columns:1fr 1.05fr .9fr;gap:16px;margin-top:18px}.panel{border-radius:15px;padding:16px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.head h2{font-size:15px;margin:0}.head h2 span{color:var(--mint)}.head a{font-size:9px;color:var(--mint);text-decoration:none}
+.track{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;padding:7px 4px;border-bottom:1px solid #ffffff0c}.track img{width:42px;height:42px;object-fit:cover;border-radius:7px}.track b{font-size:11px}.track span{display:block;color:#83958f;font-size:9px;margin-top:3px}.track time{font-size:9px;color:#758781}.albums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.album img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}.album b{font-size:10px;display:block;margin-top:6px}.album span{font-size:8px;color:#83958f}.replay{display:grid;grid-template-columns:115px 1fr;gap:14px;align-items:center}.replay img{width:115px;height:115px;object-fit:cover;border-radius:9px}.replay h3{font-size:16px;margin:5px 0}.replay p{font-size:10px;color:#8fa09a}.count{font-size:23px;color:var(--mint);font-weight:950}
+.lower{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:16px;margin:16px 0 100px}.discover{display:grid;grid-template-columns:110px 1fr;gap:13px}.discover img{width:110px;height:110px;object-fit:cover;border-radius:8px}.discover h3{margin:3px 0 6px}.discover p{font-size:10px;color:#9baca6;line-height:1.5}.tinybtn{border:0;background:var(--mint);color:#00251c;font-size:9px;font-weight:950;padding:9px 12px;border-radius:6px}.rank{display:grid;grid-template-columns:20px 35px 1fr auto;gap:9px;align-items:center;padding:6px 0;border-bottom:1px solid #ffffff0c;font-size:10px}.rank img{width:35px;height:35px;object-fit:cover;border-radius:5px}.rank small{color:#81928c}.schedule div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ffffff0d;font-size:10px}.schedule b{color:var(--mint)}
+.mobilebar{display:none}
+@media(max-width:900px){header{height:72px}.logo{width:140px}.dev{display:none}nav,.search,.heart{display:none}.livebtn{margin-left:auto;padding:10px 15px}.hero{grid-template-columns:1fr}.player{grid-template-columns:1fr;padding:15px}.cover{max-width:430px;margin:auto}.now{padding:6px}.side{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}.sidehead{grid-column:1/-1}.tiles{grid-template-columns:1fr 1fr}.grid,.lower{grid-template-columns:1fr}.mobilebar{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:40;align-items:center;gap:10px;padding:8px 10px;border-radius:14px}.mobilebar img{width:46px;height:46px;border-radius:8px;object-fit:cover}.mobilebar div{flex:1;min-width:0}.mobilebar b,.mobilebar span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mobilebar b{font-size:11px}.mobilebar span{font-size:9px;color:#8fa09a}.mobilebar button{width:40px;height:40px;border:1px solid var(--mint);border-radius:50%;background:#07120f;color:white}}
+@media(max-width:540px){.wrap{width:94vw}.tiles{grid-template-columns:1fr 1fr}.player{gap:12px}.title{font-size:32px}.side{grid-template-columns:1fr}.sidehead{grid-column:auto}.albums{grid-template-columns:repeat(3,1fr)}}
+
+/* V2 PLAYER DEV */
+.player{transition:box-shadow .5s ease,border-color .5s ease}
+.player.is-playing{border-color:rgba(0,239,181,.48);box-shadow:inset 0 1px rgba(255,255,255,.04),0 25px 80px #0008,0 0 42px rgba(0,239,181,.12)}
+.coverbox{position:relative}
+.coverbox:after{content:"";position:absolute;inset:-5px;border-radius:17px;border:1px solid rgba(0,239,181,.35);opacity:.35;pointer-events:none}
+.player.is-playing .coverbox:after{animation:rehitsPulse 2.2s ease-in-out infinite}
+@keyframes rehitsPulse{0%,100%{opacity:.25;box-shadow:0 0 8px rgba(0,239,181,.12)}50%{opacity:.9;box-shadow:0 0 28px rgba(0,239,181,.46)}}
+.cover{transition:opacity .45s ease,transform .6s ease}.cover.changing{opacity:.2;transform:scale(.985)}
+.liveMeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.modeBadge{font-size:10px;font-weight:950;letter-spacing:.1em;color:#06130f;background:var(--mint);border-radius:999px;padding:6px 9px}
+.visualizer{height:22px;display:flex;align-items:end;gap:3px;margin-left:4px}
+.visualizer i{display:block;width:3px;height:5px;border-radius:5px;background:var(--mint);opacity:.65}
+.player.is-playing .visualizer i{animation:eq .7s ease-in-out infinite alternate}
+.visualizer i:nth-child(2){animation-delay:.18s}.visualizer i:nth-child(3){animation-delay:.33s}.visualizer i:nth-child(4){animation-delay:.08s}.visualizer i:nth-child(5){animation-delay:.25s}
+@keyframes eq{from{height:4px}to{height:20px}}
+.nextline{margin-top:16px;padding:11px 13px;border:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.18);border-radius:9px;color:#91a39d;font-size:10px}
+.nextline strong{color:white}.nextline em{font-style:normal;color:var(--mint);font-weight:900;margin-right:8px}
+.round,.livebtn{cursor:pointer;transition:transform .15s ease,box-shadow .2s ease}.round:active,.livebtn:active{transform:scale(.94)}
+.round.liked{color:var(--mint);border-color:var(--mint);box-shadow:0 0 18px rgba(0,239,181,.25)}
+.offlineState{display:none;margin-top:14px;padding:12px;border:1px solid rgba(255,180,70,.28);background:rgba(60,35,5,.22);border-radius:9px;color:#ffd18a;font-size:11px}
+.offline .offlineState{display:block}.offline .live{color:#ffbe65;border-color:#ffbe6566}.offline .dot{background:#ffbe65;box-shadow:0 0 12px #ffbe65}
+.mobileNow{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,rgba(1,8,6,.2),#020605 68%),var(--mobile-art);background-size:cover;background-position:center;display:none;overflow:auto}
+.mobileNow:before{content:"";position:absolute;inset:0;background:rgba(1,6,5,.45);backdrop-filter:blur(35px);z-index:-1}
+.mobileNow.open{display:block}.mobileNowInner{width:min(480px,92vw);min-height:100%;margin:auto;padding:22px 8px 36px;display:flex;flex-direction:column}
+.mobileNowTop{display:flex;align-items:center;justify-content:space-between}.mobileNowTop img{width:132px}.closeNow{border:0;background:transparent;color:white;font-size:27px}
+.mobileNowCover{width:100%;aspect-ratio:1;object-fit:cover;border-radius:22px;margin:38px 0 26px;box-shadow:0 30px 70px #000a}
+.mobileNowProgram{color:var(--mint);font-size:11px;font-weight:950;letter-spacing:.12em}.mobileNow h2{font-size:32px;margin:9px 0 5px}.mobileNowArtist{color:#c2cfca}
+.mobileNowControls{display:flex;align-items:center;justify-content:space-around;margin:28px 0}.mobileNowControls .big{width:68px;height:68px;border-radius:50%;border:1px solid var(--mint);background:#07140f;color:white;font-size:26px;box-shadow:0 0 30px rgba(0,239,181,.28)}
+.mobileNowNext{margin-top:auto;border-top:1px solid #ffffff1c;padding-top:18px;font-size:11px;color:#93a59f}.mobileNowNext b{color:white}
+.mobilebar{cursor:pointer}
+@media(min-width:901px){.mobileNow{display:none!important}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a class="on">Hjem</a><a>Programmer</a><a>RE:FRESH</a><a>RE:PLAY</a><a>RE:DISCOVER</a><a>Sendeplan</a></nav><span class="search">⌕</span><span class="heart">♡</span><button class="livebtn">LIVE</button></div></header>
+<div class="wrap">
+<section class="hero">
+ <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge">RE:FRESH</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName">RE:FRESH</div><div class="slogan" id="programSlogan">YOUR NEXT FAVORITE.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><button class="round">•••</button><button class="round play" id="mainPlay">Ⅱ</button><button class="round">🔊</button></div><div class="progress"><i></i></div><div class="times"><span>LIVE</span><span>RE:HITS</span></div><div class="nextline"><em>RE:NESTE</em> <strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
+ <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b>RE:FRESH</b><span>YOUR NEXT FAVORITE.</span><span>10:00 – 14:00</span></div></div><div class="air"><div class="airicon">↶</div><div><b>RE:NESTE • RE:PLAY</b><span>ONE THROWBACK. EVERY HOUR.</span><span>14:00 – 15:00</span></div></div></aside>
+</section>
+
+<section class="tiles"><article class="tile glass"><h3><span>RE:</span>FRESH</h3><p>YOUR NEXT FAVORITE.</p></article><article class="tile glass"><h3><span>RE:</span>PLAY</h3><p>ONE THROWBACK. EVERY HOUR.</p></article><article class="tile glass"><h3><span>RE:</span>DISCOVER</h3><p>DISCOVER WHAT'S NEXT.</p></article><article class="tile glass"><h3><span>RE:</span>MEST LIKT</h3><p>TOPP 5 AKKURAT NÅ.</p></article></section>
+
+<section class="grid">
+ <div class="panel glass"><div class="head"><h2>SISTE LÅTER</h2><a>Se alle</a></div><div id="recent"></div></div>
+ <div class="panel glass"><div class="head"><h2><span>RE:FRESH</span> — NYE LÅTER</h2><a>Se alle</a></div><div class="albums" id="fresh"></div></div>
+ <div class="panel glass"><div class="head"><h2><span>RE:PLAY</span> — TIMENS THROWBACK</h2></div><div class="replay"><img id="replayCover"><div><h3>Mr. Brightside</h3><p>The Killers • 2003</p><small>Neste RE:PLAY</small><div class="count">17 min</div></div></div></div>
+</section>
+
+<section class="lower">
+ <div class="panel glass"><div class="head"><h2><span>RE:DISCOVER</span> — ARTIST I FOKUS</h2></div><div class="discover"><img id="discoverCover"><div><h3>Artist i fokus</h3><p>En artist eller låt vi mener du bør oppdage akkurat nå.</p><button class="tinybtn">HØR MER</button></div></div></div>
+ <div class="panel glass"><div class="head"><h2><span>RE:MEST LIKT</span></h2><a>Se alle</a></div><div id="ranking"></div></div>
+ <div class="panel glass"><div class="head"><h2>PROGRAMMER</h2><a>Se alle</a></div><div class="schedule"><div><b>RE:FRESH</b><span>10:00 – 14:00</span></div><div><b>RE:PLAY</b><span>Hver hele time</span></div><div><b>RE:DISCOVER</b><span>Kommer</span></div><div><b>RE:HITS</b><span>NON STOP</span></div></div></div>
+</section>
+</div>
+
+<div class="mobilebar glass" id="mobileBar"><img id="mobileCover"><div><b id="miniTitle">It's ok I'm ok</b><span id="miniArtist">Tate McRae • RE:FRESH</span></div><button id="miniPlay">Ⅱ</button></div>
+<div class="mobileNow" id="mobileNow">
+ <div class="mobileNowInner">
+  <div class="mobileNowTop"><img src="rehits-logo-v2.png" alt="RE:HITS"><button class="closeNow" id="closeNow">⌄</button></div>
+  <img class="mobileNowCover" id="fullCover">
+  <div class="mobileNowProgram" id="fullProgram">● LIVE • RE:FRESH</div>
+  <h2 id="fullTitle">It's ok I'm ok</h2><div class="mobileNowArtist" id="fullArtist">Tate McRae</div>
+  <div class="mobileNowControls"><button class="round" id="fullLike">♡</button><button class="big" id="fullPlay">Ⅱ</button><button class="round">🔊</button></div>
+  <div class="mobileNowNext">RE:NESTE<br><b id="fullNext">Sabrina Carpenter — Taste</b></div>
+ </div>
+</div>
+<script>
+/* RE:HITS V2 Player DEV — visual demo only; no V1/backend changes */
+const art='https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/c5/02/7ec502cb-dc67-8e73-87d8-513e589d18c9/196873653616.jpg/600x600bb.jpg';
+const $=id=>document.getElementById(id);
+$('cover').src=art;$('mobileCover').src=art;$('fullCover').src=art;$('replayCover').src=art;$('discoverCover').src=art;
+document.documentElement.style.setProperty('--art',`url("${art}")`);
+document.documentElement.style.setProperty('--mobile-art',`url("${art}")`);
+
+const songs=[['It’s ok I’m ok','Tate McRae','12:42'],['Taste','Sabrina Carpenter','12:39'],['Espresso','Sabrina Carpenter','12:36'],['Beautiful Things','Benson Boone','12:32'],['Austin','Dasha','12:29']];
+$('recent').innerHTML=songs.map(s=>`<div class="track"><img src="${art}"><div><b>${s[0]}</b><span>${s[1]}</span></div><time>${s[2]}</time></div>`).join('');
+$('fresh').innerHTML=songs.slice(0,3).map(s=>`<div class="album"><img src="${art}"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+$('ranking').innerHTML=songs.map((s,i)=>`<div class="rank"><b>${i+1}</b><img src="${art}"><div>${s[0]}<br><small>${s[1]}</small></div><span>♡ ${342-i*31}</span></div>`).join('');
+
+let playing=true, liked=false;
+function setPlaying(v){
+ playing=v;$('player').classList.toggle('is-playing',v);
+ [$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.textContent=v?'Ⅱ':'▶');
+}
+[$('mainPlay'),$('miniPlay'),$('fullPlay')].forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();setPlaying(!playing)}));
+function setLiked(v){
+ liked=v;[$('likeBtn'),$('fullLike')].forEach(b=>{b.textContent=v?'♥':'♡';b.classList.toggle('liked',v)});
+}
+[$('likeBtn'),$('fullLike')].forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();setLiked(!liked)}));
+
+$('mobileBar').addEventListener('click',()=>$('mobileNow').classList.add('open'));
+$('closeNow').addEventListener('click',()=>$('mobileNow').classList.remove('open'));
+
+function setMode(mode){
+ const modes={
+  fresh:['RE:FRESH','YOUR NEXT FAVORITE.','🔥 RE:FRESH'],
+  replay:['RE:PLAY','ONE THROWBACK. EVERY HOUR.','↶ RE:PLAY'],
+  discover:['RE:DISCOVER',"DISCOVER WHAT'S NEXT.",'✦ RE:DISCOVER'],
+  normal:['RE:HITS','HITS DIFFERENT.','● RE:HITS']
+ };
+ const m=modes[mode]||modes.normal;
+ $('programName').textContent=m[0];$('programSlogan').textContent=m[1];$('modeBadge').textContent=m[2];$('fullProgram').textContent='● LIVE • '+m[0];
+}
+setMode('fresh');
+</script>
+</body></html>
