@@ -102,6 +102,13 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 
 .discoverPlaceholder{width:110px;height:110px;display:grid;place-items:center;border-radius:8px;background:#0a2c22;color:var(--mint);font-size:48px}/* V2.9 navigation and full views */
 .navIcon{background:none;border:0;cursor:pointer}.nav a{cursor:pointer}.tile,[data-goto]{cursor:pointer}.tile:hover{border-color:var(--mint);transform:translateY(-2px)}.tile{transition:transform .2s,border-color .2s}.head a{cursor:pointer}.pageView{width:min(1440px,94vw);margin:22px auto 110px;border-radius:18px;padding:clamp(20px,4vw,42px);min-height:420px}.pageView[hidden],#homeView[hidden]{display:none!important}.pageHeader h1{font-size:clamp(28px,4vw,48px);margin:22px 0 7px}.pageHeader p{color:var(--muted);margin:0 0 25px}.pageList{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}.pageItem{padding:13px;border:1px solid var(--line);border-radius:12px;background:#06140fcc;display:flex;gap:12px;align-items:center;min-width:0}.pageItem img{width:62px;height:62px;object-fit:cover;border-radius:8px}.pageItem b{font-size:13px;overflow-wrap:anywhere}.pageItem small{display:block;color:var(--muted);margin-top:5px}.pageItem button{margin-left:auto}.pageSchedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.dayCard{border:1px solid var(--line);border-radius:12px;padding:17px;background:#06140fcc}.dayCard h3{color:var(--mint)}.dayCard p{display:flex;justify-content:space-between;gap:10px;font-size:12px;border-bottom:1px solid #ffffff14;padding:9px 0}.pageNotice{padding:20px;border:1px solid var(--line);border-radius:12px;color:#d3e6df;background:#06140f}.searchBox{width:100%;max-width:560px;padding:14px;border-radius:9px;background:#091b15;border:1px solid var(--mint);color:white;font-size:16px;margin-bottom:18px}.pageView a{color:var(--mint)}@media(max-width:900px){.pageView{margin-top:12px}.navIcon{display:none}}
+
+/* V2.10 — mobile DAB-style upcoming song preview */
+.dabLabel{display:none;color:var(--mint);font-size:10px;font-weight:950;letter-spacing:.13em;margin-top:18px}
+.mobileNow.dabPreview .dabLabel{display:block}
+.mobileNow.dabPreview .mobileNowCover{box-shadow:0 20px 65px #00efb522}
+.mobilebar.dabPreview{border-color:rgba(0,239,181,.65)}
+@media(prefers-reduced-motion:no-preference){.mobileNowCover,.mobilebar{transition:border-color .3s,box-shadow .3s}}
 </style>
 </head>
 <body>
@@ -144,7 +151,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
   <div class="mobileNowTop"><img src="rehits-logo-v2.png" alt="RE:HITS"><button class="closeNow" id="closeNow">⌄</button></div>
   <img class="mobileNowCover" id="fullCover">
   <div class="mobileNowProgram" id="fullProgram">● LIVE • RE:FRESH</div>
-  <h2 id="fullTitle">It's ok I'm ok</h2><div class="mobileNowArtist" id="fullArtist">Tate McRae</div>
+  <div class="dabLabel" id="dabLabel">RE:NESTE • KOMMER SNART</div><h2 id="fullTitle">It's ok I'm ok</h2><div class="mobileNowArtist" id="fullArtist">Tate McRae</div>
   <div class="mobileNowControls"><button class="round" id="fullLike">♡</button><button class="big" id="fullPlay" aria-label="Spill radio"></button><button class="round">🔊</button></div>
   <div class="mobileNowNext">RE:NESTE<br><b id="fullNext">Sabrina Carpenter — Taste</b></div>
  </div>
@@ -456,6 +463,69 @@ document.querySelectorAll('[data-goto]').forEach(el=>{el.addEventListener('click
 const originalRenderStatus=renderStatus;renderStatus=function(s){originalRenderStatus(s);setLiked(favoriteTitles.includes(s.title));};
 const originalRenderRecent=renderRecent;renderRecent=function(items){originalRenderRecent(items);if(location.hash==='#historikk')renderPage()};
 const originalRenderFresh=renderFresh;renderFresh=function(items){originalRenderFresh(items);if(location.hash==='#refresh')renderPage()};
+
+/* V2.10 — DAB preview. Only on mobile; does not touch the broadcast or queue.
+   Uses real API started_at + duration, and never guesses when data is missing. */
+let dabPreviewUntil=0, dabPreviewKey='', dabShowing=false;
+function validUpcoming(value){
+ const v=String(value||'').trim();
+ return v && !/^(ikke valgt|ingen sang|ingen musikk|venter|unknown|neste låt)$/i.test(v);
+}
+function syncAndroidMedia(){
+ if(!('mediaSession' in navigator) || !lastStatus || !('MediaMetadata' in window))return;
+ const current=trackData(lastStatus.title);
+ const artwork=lastStatus.cover?[{src:safeCover(lastStatus.cover),sizes:'512x512'}]:[];
+ try{
+  navigator.mediaSession.metadata=new MediaMetadata({
+   title:current.title,artist:current.artist==='RE:HITS'?'':current.artist,
+   album:'RE:HITS • LIVE',artwork
+  });
+  navigator.mediaSession.playbackState=audio.paused?'paused':'playing';
+ }catch(e){console.debug('Media Session metadata:',e)}
+}
+if('mediaSession' in navigator){
+ try{
+  navigator.mediaSession.setActionHandler('play',()=>{if(audio.paused)toggleAudio()});
+  navigator.mediaSession.setActionHandler('pause',()=>{if(!audio.paused)toggleAudio()});
+ }catch(e){}
+}
+audio.addEventListener('playing',syncAndroidMedia);
+audio.addEventListener('pause',syncAndroidMedia);
+function dabTick(){
+ if(!lastStatus)return;
+ const mobile=window.matchMedia('(max-width:900px)').matches;
+ const start=Date.parse(lastStatus.started_at||'');
+ const duration=Number(lastStatus.duration);
+ const next=String(lastStatus.next||'').trim();
+ const key=String(lastStatus.started_at||'')+'|'+String(lastStatus.title||'');
+ const remaining=(start+duration*1000-Date.now())/1000;
+ const canPreview=mobile && Number.isFinite(start) && Number.isFinite(duration)
+   && duration>45 && validUpcoming(next) && next!==String(lastStatus.title||'');
+ if(key!==dabPreviewKey){
+  dabPreviewKey=key;dabPreviewUntil=0;dabShowing=false;
+ }
+ if(canPreview && remaining<=30 && remaining>20 && !dabPreviewUntil){
+  dabPreviewUntil=Date.now()+8000;
+ }
+ const show=Boolean(canPreview && remaining>0 && dabPreviewUntil>Date.now());
+ if(show===dabShowing)return;
+ dabShowing=show;
+ $('mobileNow').classList.toggle('dabPreview',show);
+ $('mobileBar').classList.toggle('dabPreview',show);
+ const t=trackData(show?next:lastStatus.title);
+ $('fullTitle').textContent=t.title;
+ $('fullArtist').textContent=t.artist==='RE:HITS'?'':t.artist;
+ $('miniTitle').textContent=t.title;
+ $('miniArtist').textContent=show?'RE:NESTE • KOMMER SNART':t.artist+' • '+programMode(lastStatus.program||'')[0];
+ $('fullProgram').textContent=show?'● RE:NESTE • KOMMER SNART':'● LIVE • '+programMode(lastStatus.program||'')[0];
+ // Next song artwork is not in /api/status: use a clear placeholder, not current song's cover.
+ $('fullCover').src=show?FALLBACK_ART:safeCover(lastStatus.cover);
+ $('mobileCover').src=show?FALLBACK_ART:safeCover(lastStatus.cover);
+}
+const v210RenderStatus=renderStatus;
+renderStatus=function(status){v210RenderStatus(status);dabTick();syncAndroidMedia()};
+setInterval(dabTick,1000);
+
 refreshFavorites();renderPage();
 
 setPlaying(false);setArtwork(FALLBACK_ART);
