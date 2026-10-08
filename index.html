@@ -109,10 +109,33 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .mobileNow.dabPreview .mobileNowCover{box-shadow:0 20px 65px #00efb522}
 .mobilebar.dabPreview{border-color:rgba(0,239,181,.65)}
 @media(prefers-reduced-motion:no-preference){.mobileNowCover,.mobilebar{transition:border-color .3s,box-shadow .3s}}
+
+/* V2.12 – radio player prominence + complete play history */
+@media(min-width:1100px){
+ .hero{grid-template-columns:minmax(0,2.55fr) minmax(290px,.75fr);gap:18px}
+ .player{grid-template-columns:minmax(270px,350px) minmax(0,1fr);gap:34px;padding:28px;min-height:420px}
+ .player .title{font-size:clamp(36px,3.2vw,54px)}
+ .player .artist{font-size:20px}
+ .player .play{width:70px;height:70px}
+ .player .controls{margin-top:30px}
+ .player .nextline{margin-top:29px}
+}
+@media(min-width:901px) and (max-width:1099px){.hero{grid-template-columns:minmax(0,2fr) minmax(265px,.8fr)}.player{grid-template-columns:minmax(205px,280px) minmax(0,1fr);gap:22px;padding:22px}}
+.historyTools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:17px}
+.historyTools input,.historyTools select{flex:1 1 180px;min-width:0;padding:12px 13px;border-radius:9px;border:1px solid var(--line);background:#071b14;color:var(--text);font:inherit;font-size:13px}
+.historyMeta{color:var(--muted);font-size:12px;margin:0 0 12px}
+.historyTable{display:flex;flex-direction:column;gap:7px}
+.historyRow{display:grid;grid-template-columns:54px minmax(0,1fr) minmax(115px,.55fr) 140px;align-items:center;gap:14px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:rgba(3,14,10,.7)}
+.historyRow img{width:54px;height:54px;border-radius:8px;object-fit:cover}
+.historySong{min-width:0}.historySong b{display:block;font-size:14px;overflow-wrap:anywhere}.historySong small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.historyProgram{font-size:12px;color:var(--mint);overflow-wrap:anywhere}
+.historyTime{font-size:12px;color:#c0d0ca;text-align:right}
+.historyMore{margin:18px auto 0;display:block;padding:12px 22px;border:1px solid var(--mint);background:transparent;color:var(--mint);border-radius:9px;font-weight:800;cursor:pointer}
+@media(max-width:600px){.historyRow{grid-template-columns:46px minmax(0,1fr) auto;gap:10px;padding:10px}.historyRow img{width:46px;height:46px}.historyProgram{grid-column:2;grid-row:2;font-size:10px}.historyTime{grid-column:3;grid-row:1 / span 2;font-size:10px;max-width:92px}.historySong b{font-size:12px}}
 </style>
 </head>
 <body>
-<header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a href="#hjem" data-page="hjem" class="on">Hjem</a><a href="#programmer" data-page="programmer">Programmer</a><a href="#refresh" data-page="refresh">RE:FRESH</a><a href="#replay" data-page="replay">RE:PLAY</a><a href="#discover" data-page="discover">RE:DISCOVER</a><a href="#sendeplan" data-page="sendeplan">Sendeplan</a></nav><button class="navIcon search" id="searchNav" aria-label="Søk">⌕</button><button class="navIcon heart" id="favNav" aria-label="Favoritter">♡</button><button class="livebtn" id="liveNav">LIVE</button></div></header>
+<header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a href="#hjem" data-page="hjem" class="on">Hjem</a><a href="#historikk" data-page="historikk">Sist spilt</a><a href="#refresh" data-page="refresh">RE:FRESH</a><a href="#replay" data-page="replay">RE:PLAY</a><a href="#discover" data-page="discover">RE:DISCOVER</a><a href="#sendeplan" data-page="sendeplan">Sendeplan</a></nav><button class="navIcon search" id="searchNav" aria-label="Søk">⌕</button><button class="navIcon heart" id="favNav" aria-label="Favoritter">♡</button><button class="livebtn" id="liveNav">LIVE</button></div></header>
 <div class="wrap">
 <main id="homeView"><section class="hero">
  <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge" hidden>RE:PLAY</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName" hidden>RE:HITS</div><div class="slogan" id="programSlogan" hidden>HITS DIFFERENT.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay" aria-label="Spill radio"></button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="nextline"><em>RE:NESTE</em><strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState">● RE:HITS • VI ER STRAKS TILBAKE</div></div></article>
@@ -344,7 +367,7 @@ function renderRecent(items=[]){
     const t=trackData(x);
     const cover=safeCover(x.cover||x.artwork||x.image);
     const tm=x.played_at ? new Date(x.played_at).toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'}) : '';
-    return `<div class="track">${coverImg(cover)}<div><b>${esc(t.title)}</b><span>${esc(t.artist)}</span></div><time>${esc(tm)}</time></div>`;
+    return `<div class="track">${coverImg(cover)}<div><b>${esc(t.title)}</b><span>${esc(t.artist)} · ${esc(historyProgramName(x.program))}</span></div><time>${esc(tm)}</time></div>`;
   }).join('');
 }
 function renderFresh(items=[]){
@@ -433,6 +456,41 @@ $('shareBtn').addEventListener('click',async()=>{
 });
 
 
+
+/* V2.12 – full history with date, clock, program and filters.
+   API /api/history retains up to 2000 entries; this view shows all returned entries. */
+let historyVisible=50,historyQuery='',historyProgramFilter='';
+function historyProgramName(p){
+ const raw=String(p||'').trim();
+ if(!raw)return 'Program ikkje registrert';
+ if(/RE:PLAY/i.test(raw))return 'RE:PLAY';
+ if(/RE:FRESH/i.test(raw))return 'RE:FRESH';
+ return raw;
+}
+function historyTimestamp(value){
+ if(!value)return 'Tid ikkje registrert';
+ const d=new Date(value);
+ if(!Number.isFinite(d.getTime()))return 'Tid ikkje registrert';
+ return d.toLocaleString('nb-NO',{timeZone:'Europe/Oslo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function renderHistoryPage(c){
+ const programs=[...new Set(historyItems.map(x=>historyProgramName(x.program)))].sort((a,b)=>a.localeCompare(b,'nb'));
+ c.innerHTML=`<div class="historyTools"><input id="historySearch" type="search" placeholder="Søk etter låt eller artist …" aria-label="Søk i spillehistorikk"><select id="historyProgram" aria-label="Filtrer etter program"><option value="">Alle programmer</option>${programs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('')}</select></div><p id="historyCount" class="historyMeta"></p><div id="historyResults" class="historyTable"></div><button class="historyMore" id="historyMore" hidden>Vis flere låter</button>`;
+ const q=$('historySearch'),p=$('historyProgram');q.value=historyQuery;p.value=historyProgramFilter;
+ q.addEventListener('input',()=>{historyQuery=q.value;historyVisible=50;paintHistoryRows()});
+ p.addEventListener('change',()=>{historyProgramFilter=p.value;historyVisible=50;paintHistoryRows()});
+ $('historyMore').addEventListener('click',()=>{historyVisible+=50;paintHistoryRows()});
+ paintHistoryRows();
+}
+function paintHistoryRows(){
+ const list=$('historyResults');if(!list)return;
+ const term=historyQuery.trim().toLocaleLowerCase('nb');
+ const matches=historyItems.filter(x=>(!historyProgramFilter||historyProgramName(x.program)===historyProgramFilter)&&(!term||String(x.title||'').toLocaleLowerCase('nb').includes(term)||historyProgramName(x.program).toLocaleLowerCase('nb').includes(term)));
+ $('historyCount').textContent=`${matches.length} registrerte avspillinger${historyItems.length>=2000?' (API-et lagrer maksimalt 2000)': ''}`;
+ list.innerHTML=matches.length?matches.slice(0,historyVisible).map(x=>{const t=trackData(x);return `<div class="historyRow">${coverImg(x.cover||x.artwork||x.image)}<div class="historySong"><b>${esc(t.title)}</b><small>${esc(t.artist)}</small></div><div class="historyProgram">${esc(historyProgramName(x.program))}</div><time class="historyTime">${esc(historyTimestamp(x.played_at))}</time></div>`}).join(''):'<div class="pageNotice">Ingen låter funnet med dette filteret.</div>';
+ $('historyMore').hidden=matches.length<=historyVisible;
+}
+
 /* V2.9 — functional single-page navigation, API-backed views. */
 let historyItems=[],freshItems=[],favoriteTitles=[];
 const PAGE_NAMES={hjem:'Hjem',programmer:'Programmer',refresh:'RE:FRESH',replay:'RE:PLAY',discover:'RE:DISCOVER',sendeplan:'Sendeplan',historikk:'Siste låter',mestlikt:'RE:MEST LIKT',favoritter:'Mine favoritter',sok:'Søk etter låter'};
@@ -444,10 +502,10 @@ function scheduleHtml(){return `<div class="pageSchedule"><div class="dayCard"><
 async function refreshFavorites(){try{const r=await fetch(API_URL+'/api/favorites?voter='+encodeURIComponent(voterId),{cache:'no-store'});if(r.ok){const d=await r.json();favoriteTitles=Array.isArray(d.favorites)?d.favorites:[];setLiked(favoriteTitles.includes(lastStatus?.title));}}catch(e){}}
 async function saveFavorite(){const title=lastStatus?.title;if(!title){alert('Ingen låt å lagre akkurat nå.');return}if(favoriteTitles.includes(title)){location.hash='favoritter';return}try{const r=await fetch(API_URL+'/api/favorite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,voter:voterId})});const d=await r.json();if(!r.ok||!d.ok)throw Error(d.message||'Kunne ikkje lagre favoritten.');await refreshFavorites();}catch(e){alert('Kunne ikkje lagre favoritten: '+e.message)}}
 [$('likeBtn'),$('fullLike')].forEach(b=>{const clone=b.cloneNode(true);b.replaceWith(clone);clone.addEventListener('click',e=>{e.stopPropagation();saveFavorite()})});
-function renderPage(){let page=decodeURIComponent(location.hash.slice(1)).toLowerCase()||'hjem';if(!PAGE_NAMES[page])page='hjem';const home=page==='hjem';$('homeView').hidden=!home;$('pageView').hidden=home;document.querySelectorAll('nav [data-page]').forEach(a=>a.classList.toggle('on',a.dataset.page===page));if(home){document.title='RE:HITS V2 • Hjem';return}document.title='RE:HITS V2 • '+PAGE_NAMES[page];$('pageTitle').textContent=PAGE_NAMES[page];const subtitles={programmer:'Programmene du hører på The Hits.',refresh:'YOUR NEXT FAVORITE.',replay:'ONE THROWBACK. EVERY HOUR.',discover:"DISCOVER WHAT’S NEXT.",sendeplan:'Oversikt over radioens nåværende sendetider.',historikk:'De siste låtene fra direktesendingen.',mestlikt:'Lytternes favoritter — kommer senere.',favoritter:'Låtene du har lagret i denne nettleseren.',sok:'Søk i radiobiblioteket.'};$('pageSubtitle').textContent=subtitles[page]||'';const c=$('pageContent');
+function renderPage(){let page=decodeURIComponent(location.hash.slice(1)).toLowerCase()||'hjem';if(!PAGE_NAMES[page])page='hjem';const home=page==='hjem';$('homeView').hidden=!home;$('pageView').hidden=home;document.querySelectorAll('nav [data-page]').forEach(a=>a.classList.toggle('on',a.dataset.page===page));if(home){document.title='RE:HITS V2 • Hjem';return}document.title='RE:HITS V2 • '+PAGE_NAMES[page];$('pageTitle').textContent=PAGE_NAMES[page];const subtitles={programmer:'Programmene du hører på The Hits.',refresh:'YOUR NEXT FAVORITE.',replay:'ONE THROWBACK. EVERY HOUR.',discover:"DISCOVER WHAT’S NEXT.",sendeplan:'Oversikt over radioens nåværende sendetider.',historikk:'Alle registrerte låter – med tidspunkt og program.',mestlikt:'Lytternes favoritter — kommer senere.',favoritter:'Låtene du har lagret i denne nettleseren.',sok:'Søk i radiobiblioteket.'};$('pageSubtitle').textContent=subtitles[page]||'';const c=$('pageContent');
 if(page==='programmer'||page==='sendeplan'){c.innerHTML=scheduleHtml()}
 else if(page==='refresh'){c.innerHTML=rowsHtml(freshItems)}
-else if(page==='historikk'){c.innerHTML=rowsHtml(historyItems)}
+else if(page==='historikk'){renderHistoryPage(c)}
 else if(page==='replay'){c.innerHTML=lastReplay?rowsHtml([lastReplay]):'<div class="pageNotice">Vi venter på neste RE:PLAY. En throwback spilles hver hele time.</div>'}
 else if(page==='discover'){c.innerHTML='<div class="pageNotice"><h2>Artist i fokus – kommer snart</h2><p>Vi lanserer RE:DISCOVER når første artist er valgt. Ingen tilfeldig artist blir vist som redaksjonelt utvalgt.</p></div>'}
 else if(page==='mestlikt'){c.innerHTML='<div class="pageNotice">RE:MEST LIKT er under utvikling. Favoritter du lagrer er personlige; en offentlig toppliste krever egen opptelling i radioboten.</div>'}
