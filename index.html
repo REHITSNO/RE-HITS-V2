@@ -133,7 +133,7 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .historyMore{margin:18px auto 0;display:block;padding:12px 22px;border:1px solid var(--mint);background:transparent;color:var(--mint);border-radius:9px;font-weight:800;cursor:pointer}
 @media(max-width:600px){.historyRow{grid-template-columns:46px minmax(0,1fr) auto;gap:10px;padding:10px}.historyRow img{width:46px;height:46px}.historyProgram{grid-column:2;grid-row:2;font-size:10px}.historyTime{grid-column:3;grid-row:1 / span 2;font-size:10px;max-width:92px}.historySong b{font-size:12px}}
 /* V2.13 – OFF AIR uten behov for bot/API */
-.player.offline{--art:url('rehits-logo-v2.png');border-color:rgba(255,193,104,.28)}
+.player.offline{--art:url('rehits-party-cover.png');border-color:rgba(255,193,104,.28)}
 .player.offline .visualizer i{animation:none!important;height:5px!important;opacity:.22}
 .player.offline .nextline{display:none}
 .player.offline .coverbox{background:linear-gradient(140deg,#062b22,#020706);padding:20px;display:grid;place-items:center}
@@ -163,13 +163,57 @@ header{background:rgba(0,9,11,.78)!important;border-bottom-color:rgba(0,234,221,
 .coverbox{box-shadow:0 18px 55px #000b,0 0 32px rgba(0,234,221,.16)}
 .cover.is-fallback,.mobilebar img.is-fallback,.mobileNowCover.is-fallback,.songModalCard>img.is-fallback{object-fit:contain;background:#010909;padding:8%}
 @media(max-width:900px){body::before{background-position:center center}.glass{backdrop-filter:blur(12px)}.player{box-shadow:0 0 36px rgba(0,234,221,.08)}}
+
+/* PARTY EDITION V3 — redesigned layout matching approved concert dashboard */
+:root{--mint:#00f1e7;--line:rgba(0,245,231,.55)}
+body{background:#02080c!important}
+body::before{background:linear-gradient(180deg,rgba(0,10,14,.05),rgba(0,9,12,.14) 42%,rgba(0,5,8,.67) 100%),url('concert-backdrop.jpg') center center/cover no-repeat!important;filter:saturate(1.45) contrast(1.1)}
+body::after{background:linear-gradient(90deg,rgba(0,8,12,.26),transparent 17% 83%,rgba(0,8,12,.26))!important}
+header{background:rgba(0,9,12,.78)!important;min-height:77px}
+.wrap{width:min(1410px,94vw)}
+.nav .logo{width:205px;max-height:68px;object-fit:contain}
+.glass{background:linear-gradient(115deg,rgba(0,16,20,.88),rgba(0,9,14,.82))!important;border:1px solid rgba(0,240,230,.65)!important;box-shadow:0 15px 38px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.07)!important;backdrop-filter:blur(16px)}
+.hero{gap:16px;margin-top:18px}
+.player{min-height:390px;position:relative;overflow:hidden}
+.player:before{opacity:.25!important}
+.player:after{background:linear-gradient(90deg,rgba(0,11,15,.36),rgba(0,13,17,.48))!important}
+.player .coverbox{border:1px solid rgba(0,240,230,.6);border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#041e24,#01070a);box-shadow:0 10px 38px #0009}
+.player .cover{display:block;border-radius:12px;width:100%;height:100%;aspect-ratio:1;object-fit:cover}
+.player.offline .coverbox{padding:0!important;background:#01080b!important}
+.player.offline .coverbox .cover{padding:0!important;object-fit:contain!important}
+.coverDecor{display:none}
+.player .title{font-size:clamp(35px,3.3vw,56px);letter-spacing:-.035em}
+.player .artist{font-size:20px;color:#e4f7f5}
+.player .controls{margin-top:24px}
+.player .play{width:70px;height:70px;background:#00eee2!important;box-shadow:0 0 32px #00eede80}
+.player .offlineState{border-color:#00eee288;background:rgba(0,22,27,.65);color:#e0f8f5}
+.side{gap:11px}
+.side .air{background:rgba(0,20,25,.78);border-color:#00eee25e}
+.tiles{gap:14px;margin-top:16px}
+.tile{height:145px;padding:17px 19px;background-size:cover!important;background-position:center!important;display:flex;flex-direction:column;justify-content:flex-end}
+.tile:nth-child(1){background-image:linear-gradient(90deg,rgba(0,8,13,.93),rgba(0,8,13,.23)),url('tile-fresh.jpg')!important}
+.tile:nth-child(2){background-image:linear-gradient(90deg,rgba(0,8,13,.93),rgba(0,8,13,.25)),url('tile-replay.jpg')!important}
+.tile:nth-child(3){background-image:linear-gradient(90deg,rgba(0,8,13,.93),rgba(0,8,13,.25)),url('tile-discover.jpg')!important}
+.tile:nth-child(4){background-image:linear-gradient(90deg,rgba(0,8,13,.93),rgba(0,8,13,.25)),url('tile-liked.jpg')!important}
+.tile:after{display:none}
+.tile h3{margin:0 0 4px;font-size:19px;text-shadow:0 2px 8px #000}
+.tile p{color:#fff;text-shadow:0 1px 6px #000;font-weight:700}
+.grid,.lower{gap:15px;margin-top:15px}
+.panel{min-height:200px;background:linear-gradient(135deg,rgba(0,16,19,.91),rgba(0,8,12,.88))!important}
+.panel .head h2{font-size:15px}
+.panel .head a{font-size:11px}
+.replayArtwork{border:1px solid rgba(0,239,230,.5)}
+@media(min-width:1100px){.hero{grid-template-columns:minmax(0,2.9fr) minmax(275px,.8fr)}.player{grid-template-columns:minmax(260px,335px) minmax(0,1fr);padding:22px;gap:26px}.player .title{font-size:clamp(36px,3vw,50px)}}
+@media(max-width:900px){.wrap{width:94vw}.player{grid-template-columns:1fr}.player .coverbox{max-width:450px;margin:auto}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{height:130px}}
+@media(max-width:540px){.tile{height:122px;padding:12px}.tile h3{font-size:16px}.tile p{font-size:9px}.nav .logo{width:148px}.player .coverbox{width:100%}}
+
 </style>
 </head>
 <body>
 <header><div class="wrap nav"><img class="logo" src="rehits-logo-v2.png" alt="RE:HITS"><span class="dev">V2 • DEV</span><nav><a href="#hjem" data-page="hjem" class="on">Hjem</a><a href="#historikk" data-page="historikk">Sist spilt</a><a href="#refresh" data-page="refresh">RE:FRESH</a><a href="#replay" data-page="replay">RE:PLAY</a><a href="#discover" data-page="discover">RE:DISCOVER</a><a href="#sendeplan" data-page="sendeplan">Sendeplan</a></nav><button class="navIcon search" id="searchNav" aria-label="Søk">⌕</button><button class="navIcon heart" id="favNav" aria-label="Favoritter">♡</button><button class="livebtn" id="liveNav">LIVE</button></div></header>
 <div class="wrap">
 <main id="homeView"><section class="hero">
- <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge" hidden>RE:PLAY</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName" hidden>RE:HITS</div><div class="slogan" id="programSlogan" hidden>HITS DIFFERENT.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay" aria-label="Spill radio"></button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="nextline"><em>RE:NESTE</em><strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState" id="offlineMessage" role="status">RE:HITS • OFF AIR</div></div></article>
+ <article class="player glass is-playing" id="player"><div class="coverbox"><img class="cover" id="cover"><div class="coverDecor" aria-hidden="true">RE:HITS<br><small>REDISCOVER MUSIC</small></div></div><div class="now"><div class="liveMeta"><div class="live"><i class="dot"></i> LIVE</div><span class="modeBadge" id="modeBadge" hidden>RE:PLAY</span><div class="visualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="program" id="programName" hidden>RE:HITS</div><div class="slogan" id="programSlogan" hidden>HITS DIFFERENT.</div><h1 class="title" id="mainTitle">It's ok I'm ok</h1><div class="artist" id="mainArtist">Tate McRae</div><div class="controls"><button class="round" id="likeBtn" title="Lik låten">♡</button><div class="controlWrap"><button class="round" id="moreBtn" title="Mer">•••</button><div class="moreMenu" id="moreMenu"><button id="detailsBtn">🎵 Låtdetaljer</button><button id="recentBtn">🕘 Nylig spilt</button><button id="shareBtn">📤 Del låten</button></div></div><button class="round play" id="mainPlay" aria-label="Spill radio"></button><div class="controlWrap"><button class="round" id="volumeBtn" title="Volum">🔊</button><div class="volumePop" id="volumePop"><span id="volumeText">100%</span><input id="volumeSlider" type="range" min="0" max="100" value="100" aria-label="Volum"></div></div></div><div class="nextline"><em>RE:NESTE</em><strong id="nextTrack">Sabrina Carpenter — Taste</strong></div><div class="offlineState" id="offlineMessage" role="status">RE:HITS • OFF AIR</div></div></article>
  <aside class="side glass"><div class="sidehead">ON AIR NÅ</div><div class="air"><div class="airicon">◉</div><div><b id="onAirName">Henter program …</b><span id="onAirDesc">Direkte fra RE:HITS</span><span id="onAirTime"></span></div></div><div class="air"><div class="airicon">↶</div><div><b id="nextProgramName">RE:NESTE</b><span id="nextProgramDesc">Neste program</span><span id="nextProgramTime"></span></div></div></aside>
 </section>
 
@@ -216,7 +260,7 @@ header{background:rgba(0,9,11,.78)!important;border-bottom-color:rgba(0,234,221,
    Quick Tunnel URLs can be replaced below whenever they change. */
 const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
 const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
-const FALLBACK_ART='rehits-logo-v2.png';
+const FALLBACK_ART='rehits-party-cover.png';
 const $=id=>document.getElementById(id);
 
 const audio=new Audio();
