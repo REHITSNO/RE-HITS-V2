@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RE:HITS WEB V2 • DEV</title><meta name="theme-color" content="#020706">
+<title>RE:HITS • PARTY V2 DEV</title><meta name="theme-color" content="#020706">
 <style>
 :root{--mint:#00efb5;--mint2:#20ffd0;--bg:#020605;--card:rgba(7,18,15,.78);--line:rgba(41,255,200,.20);--text:#f6fbfa;--muted:#91a39d}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,Arial,sans-serif;background:#020605 url('rehits-v2-bg.png') center top/cover fixed no-repeat}
@@ -142,6 +142,40 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 .player.offline .offlineState{display:block;font-size:13px;line-height:1.6}
 .player.offline .live{color:#ffca80;border-color:#ffca8066}
 .player.offline .live .dot{background:#ffca80;box-shadow:none}
+
+/* RE:HITS V2 PARTY EDITION — visual-only, no changes to API or stream. */
+:root{--mint:#00eadd;--mint2:#4fffea;--bg:#020909;--card:rgba(5,18,20,.83);--line:rgba(0,234,221,.25);--muted:#a5c3c0}
+html{background:#020808}
+body{background:#020808;position:relative;isolation:isolate}
+/* Concert lighting built in CSS so the background works even without an image file. */
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+ radial-gradient(ellipse 27% 40% at 10% 12%,rgba(0,255,218,.27),transparent 72%),
+ radial-gradient(ellipse 30% 55% at 90% 12%,rgba(0,213,236,.25),transparent 75%),
+ radial-gradient(ellipse 40% 30% at 51% 68%,rgba(0,184,169,.18),transparent 85%),
+ linear-gradient(120deg,transparent 12%,rgba(0,245,212,.13) 19%,transparent 27%,transparent 73%,rgba(0,234,221,.12) 81%,transparent 89%),
+ linear-gradient(180deg,#001312 0%,#051a1b 38%,#010707 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.82;background:
+ conic-gradient(from 159deg at 12% 0%,transparent 0deg,rgba(0,246,224,.10) 8deg,transparent 17deg 360deg),
+ conic-gradient(from 190deg at 84% 0%,transparent 0deg,rgba(0,241,221,.13) 9deg,transparent 20deg 360deg),
+ radial-gradient(circle at 9% 37%,rgba(32,255,224,.26) 0 3px,transparent 7px),
+ radial-gradient(circle at 78% 48%,rgba(32,255,224,.28) 0 4px,transparent 9px),
+ radial-gradient(circle at 62% 17%,rgba(32,255,224,.25) 0 2px,transparent 8px),
+ linear-gradient(180deg,transparent 0%,rgba(0,0,0,.12) 30%,rgba(0,0,0,.65) 100%)}
+header{background:rgba(0,9,11,.86);border-bottom-color:rgba(0,234,221,.27)}
+.glass{background:linear-gradient(145deg,rgba(8,27,29,.89),rgba(2,11,13,.87));border-color:rgba(0,234,221,.22);box-shadow:inset 0 1px rgba(255,255,255,.055),0 20px 55px rgba(0,0,0,.48);backdrop-filter:blur(20px)}
+.player{border-color:rgba(0,234,221,.45);box-shadow:0 0 0 1px rgba(0,234,221,.08),0 22px 80px #000a,0 0 70px rgba(0,234,221,.09)}
+.player:after{background:linear-gradient(90deg,rgba(1,10,13,.83),rgba(1,12,14,.67))}
+.side,.panel,.tile{background:linear-gradient(145deg,rgba(6,24,26,.86),rgba(1,11,13,.89))}
+.tile{border-color:rgba(0,234,221,.27)}
+.tile:after{background:#00f0d9;opacity:.22}
+.tile:hover,.tinybtn:hover{box-shadow:0 0 30px rgba(0,234,221,.15)}
+.livebtn,.tinybtn,.play,.mobileNowControls .big{background:#00eadd!important;color:#002524!important;border-color:#00eadd!important}
+.live,.sidehead,.head h2 span,.head a,.nextline em,.count{color:#00f3df}
+.nextline{border-color:rgba(0,234,221,.32);background:linear-gradient(110deg,rgba(0,234,221,.11),rgba(0,0,0,.2))}
+.coverbox{box-shadow:0 18px 55px #000b,0 0 32px rgba(0,234,221,.16)}
+/* Missing cover: keep the entire logo visible rather than crop it. */
+.cover.is-fallback,.mobilebar img.is-fallback,.mobileNowCover.is-fallback,.songModalCard>img.is-fallback{object-fit:contain;background:#010909;padding:8%}
+@media(max-width:900px){body::after{opacity:.48}.glass{backdrop-filter:blur(12px)}.player{box-shadow:0 0 36px rgba(0,234,221,.08)}}
 </style>
 </head>
 <body>
@@ -193,8 +227,8 @@ nav{display:flex;gap:26px;margin-left:auto}nav a{color:#b2c0bc;text-decoration:n
 /* RE:HITS V2.1 LIVE DATA
    V2 DEV only — V1 is untouched.
    Quick Tunnel URLs can be replaced below whenever they change. */
-const API_URL = "https://arranged-radios-associated-flooring.trycloudflare.com";
-const STREAM_URL = "https://pizza-folding-twins-hist.trycloudflare.com/thehits";
+const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
+const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
 const FALLBACK_ART='rehits-logo-v2.png';
 const $=id=>document.getElementById(id);
 
@@ -268,7 +302,7 @@ $('closeNow').addEventListener('click',()=>$('mobileNow').classList.remove('open
 
 function setArtwork(url){
   const art=safeCover(url);
-  [$('cover'),$('mobileCover'),$('fullCover')].forEach(el=>{if(el){el.onerror=()=>{el.onerror=null;el.src=FALLBACK_ART};el.src=art}});
+  [$('cover'),$('mobileCover'),$('fullCover')].forEach(el=>{if(el){el.classList.toggle('is-fallback',art===FALLBACK_ART);el.onerror=()=>{el.onerror=null;el.classList.add('is-fallback');el.src=FALLBACK_ART};el.src=art}});
   document.documentElement.style.setProperty('--art',`url("${art}")`);
   document.documentElement.style.setProperty('--mobile-art',`url("${art}")`);
 }
