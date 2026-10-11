@@ -266,8 +266,8 @@ body::after{background:linear-gradient(90deg,rgba(0,8,12,.12),transparent 17% 83
 /* RE:HITS V2.1 LIVE DATA
    V2 DEV only — V1 is untouched.
    Quick Tunnel URLs can be replaced below whenever they change. */
-const API_URL = "https://decided-specialist-focuses-prayers.trycloudflare.com";
-const STREAM_URL = "https://newcastle-browse-walnut-hash.trycloudflare.com/thehits";
+const API_URL='https://delays-calvin-crimes-humanitarian.trycloudflare.com';
+const STREAM_URL='https://tablets-aka-exceed-classical.trycloudflare.com/thehits';
 const FALLBACK_ART='rehits-party-cover.png';
 const $=id=>document.getElementById(id);
 
@@ -383,7 +383,7 @@ const WEEKDAY_PROGRAMS=[
  [720,900,'RE:FRESH'],[900,1440,'The Hits NON STOP']];
 const WEEKEND_PROGRAMS=[
  [0,360,'The Hits NON STOP'],[360,1080,'Non Stop Helg'],
- [1080,1320,'Dance Mix'],[1320,1440,'The Hits NON STOP']];
+ [1080,1200,'RE:FRESH'],[1200,1440,'The Hits NON STOP']];
 const clock=n=>`${String(Math.floor(n/60)%24).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
 function norwayNow(){
  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Oslo',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
@@ -395,7 +395,6 @@ function programDescription(name){
  if(name.includes('RE:FRESH'))return 'YOUR NEXT FAVORITE.';
  if(name.includes('NIGHT'))return 'Musikk gjennom natten';
  if(name.includes('Helg'))return 'Musikk hele helgen';
- if(name.includes('Dance'))return 'Dance Mix';
  return 'HITS DIFFERENT.';
 }
 function updateProgramCards(){
@@ -473,13 +472,13 @@ function setOfflineView(){
   $('player').style.setProperty('--art',`url('${FALLBACK_ART}')`);
   $('cover').src=FALLBACK_ART;$('fullCover').src=FALLBACK_ART;$('mobileCover').src=FALLBACK_ART;
   $('mainTitle').textContent='RE:HITS • OFF AIR';
-  $('mainArtist').textContent='Sendingen er tilbake snart';
+  $('mainArtist').textContent='Tilbake ca. kl. 09:00';
   $('miniTitle').textContent='RE:HITS • OFF AIR';
-  $('miniArtist').textContent='Tilbake snart';
+  $('miniArtist').textContent='Tilbake ca. 09:00';
   $('fullTitle').textContent='RE:HITS • OFF AIR';
-  $('fullArtist').textContent='Tilbake snart';
+  $('fullArtist').textContent='Tilbake ca. 09:00';
   $('fullProgram').textContent='● OFF AIR';
-  const msg='Sendingen er tilbake snart.';
+  const msg=plannedPause()?'Planlagt sendepause kl. 01:00–09:00. Vi er tilbake ca. kl. 09:00.':'Sendingen er midlertidig utilgjengelig. Prøv igjen om litt.';
   $('offlineMessage').textContent='● RE:HITS • '+msg;
   $('nextTrack').textContent='Venter på sending';$('fullNext').textContent='Venter på sending';
   const badge=$('player').querySelector('.live');if(badge)badge.innerHTML='<i class="dot"></i> OFF AIR';
@@ -648,7 +647,7 @@ function validUpcoming(value){
 }
 function syncAndroidMedia(){
  if(!('mediaSession' in navigator) || !('MediaMetadata' in window))return;
- if(!lastStatus){navigator.mediaSession.metadata=new MediaMetadata({title:'RE:HITS • OFF AIR',artist:'Sendingen er tilbake i morgen kveld',album:'RE:HITS',artwork:[{src:new URL(FALLBACK_ART,location.href).href,sizes:'any',type:'image/png'}]});navigator.mediaSession.playbackState='paused';return;}
+ if(!lastStatus){navigator.mediaSession.metadata=new MediaMetadata({title:'RE:HITS • OFF AIR',artist:'Tilbake ca. kl. 09:00',album:'RE:HITS',artwork:[{src:new URL(FALLBACK_ART,location.href).href,sizes:'any',type:'image/png'}]});navigator.mediaSession.playbackState='paused';return;}
  const current=trackData(lastStatus.title);
  const artwork=[{src:new URL(safeCover(lastStatus.cover),location.href).href,sizes:'any',type:'image/png'}];
  try{
