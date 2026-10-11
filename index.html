@@ -473,13 +473,13 @@ function setOfflineView(){
   $('player').style.setProperty('--art',`url('${FALLBACK_ART}')`);
   $('cover').src=FALLBACK_ART;$('fullCover').src=FALLBACK_ART;$('mobileCover').src=FALLBACK_ART;
   $('mainTitle').textContent='RE:HITS • OFF AIR';
-  $('mainArtist').textContent='Sendingen er tilbake i morgen kveld';
+  $('mainArtist').textContent='Sendingen er tilbake snart';
   $('miniTitle').textContent='RE:HITS • OFF AIR';
-  $('miniArtist').textContent='Tilbake i morgen kveld';
+  $('miniArtist').textContent='Tilbake snart';
   $('fullTitle').textContent='RE:HITS • OFF AIR';
-  $('fullArtist').textContent='Tilbake i morgen kveld';
+  $('fullArtist').textContent='Tilbake snart';
   $('fullProgram').textContent='● OFF AIR';
-  const msg='Sendingen er tilbake i morgen kveld.';
+  const msg='Sendingen er tilbake snart.';
   $('offlineMessage').textContent='● RE:HITS • '+msg;
   $('nextTrack').textContent='Venter på sending';$('fullNext').textContent='Venter på sending';
   const badge=$('player').querySelector('.live');if(badge)badge.innerHTML='<i class="dot"></i> OFF AIR';
