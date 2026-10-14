@@ -472,13 +472,13 @@ function setOfflineView(){
   $('player').style.setProperty('--art',`url('${FALLBACK_ART}')`);
   $('cover').src=FALLBACK_ART;$('fullCover').src=FALLBACK_ART;$('mobileCover').src=FALLBACK_ART;
   $('mainTitle').textContent='RE:HITS • OFF AIR';
-  $('mainArtist').textContent='Tilbake Tirsdag eller Onsdag';
+  $('mainArtist').textContent='Tilbake snart';
   $('miniTitle').textContent='RE:HITS • OFF AIR';
-  $('miniArtist').textContent='Tilbake Tirsdag eller Onsdag';
+  $('miniArtist').textContent='Tilbake snart';
   $('fullTitle').textContent='RE:HITS • OFF AIR';
-  $('fullArtist').textContent='Tilbake Tirsdag eller Onsdag';
+  $('fullArtist').textContent='Tilbake snart';
   $('fullProgram').textContent='● OFF AIR';
-  const msg=plannedPause()?' Re hits tar en sendepause og er tilbake enten Tirsdag eller Onsdag. Vi er tilbake snart.':'Sendingen er midlertidig utilgjengelig. Prøv igjen om litt.';
+  const msg=plannedPause()?' Re hits tar en sendepause. Vi er tilbake snart.':'Sendingen er midlertidig utilgjengelig. Prøv igjen om litt.';
   $('offlineMessage').textContent='● RE:HITS • '+msg;
   $('nextTrack').textContent='Venter på sending';$('fullNext').textContent='Venter på sending';
   const badge=$('player').querySelector('.live');if(badge)badge.innerHTML='<i class="dot"></i> OFF AIR';
